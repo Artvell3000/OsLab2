@@ -7,6 +7,7 @@
 #include <sys/epoll.h>
 #include <errno.h>
 #include <string.h>
+#include <signal.h>
 //#include "include/lib.h"
 #include "iostream"
 
