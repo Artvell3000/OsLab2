@@ -7,7 +7,7 @@
 #include <sys/epoll.h>
 #include <errno.h>
 #include <string.h>
-#include "include/lib.h"
+//#include "include/lib.h"
 #include "iostream"
 
 
@@ -28,7 +28,7 @@ int main(int argc, char** argv)
 
     struct sigaction sa;
     sigaction(SIGHUP, NULL, &sa);
-    sa.sa_handler = sighup;
+    sa.sa_handler = sigHandler;
     sa.sa_flags |= SA_RESTART;
     sigaction(SIGHUP, &sa, NULL);
 
