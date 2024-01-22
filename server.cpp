@@ -25,15 +25,10 @@ void sigHandler(int r)
 }
 
 int setNonblock(int fd) {
-    int flags = 0;
-#if defined (O_NONBLOCK)
-    flags = fcntl(fd, F_GETFL, 0);
-    if (flags == -1)) flags = 0;
-    return fcntl(fd, F_SETFL, flags|O_NONBLOCK);
-#else
-    flags = 1;
-    return ioctl(fd, FIOBIO, &flags);
-#endif
+    int old_option = fcntl(fd, F_GETFL);
+    int new_option = old_option | O_NONBLOCK;
+    Fcntl(fd, F_SETFL, new_option);
+    return old_option;
 }
 
 int main(int argc, char** argv)
