@@ -10,12 +10,12 @@
 #include <signal.h>
 //#include "include/lib.h"
 #include "iostream"
-
+#define O_NONBLOCK
 #define PORT_NUMBER 12345
 #define BUFFER_LENGTH 1024
 #define MAX_EVENTS 32
 
-volatile std::sig_atomic_t sighup = 0;
+volatile sig_atomic_t sighup = 0;
 
 void sigHandler(int r)
 {
