@@ -9,7 +9,7 @@
 #include <string.h>
 #include <signal.h>
 #include <fcntl.h>
-
+#include <locale.h>
 #include <arpa/inet.h>
 #include <assert.h>
 #include <sys/time.h>
