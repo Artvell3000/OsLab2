@@ -14,11 +14,19 @@
 #define BUFFER_LENGTH 1024
 #define MAX_EVENTS 32
 
-volatile sig_atomic_t sighup = 0;
+volatile std::sig_atomic_t sighup = 0;
 
 void sigHandler(int r)
 {
     sighup = 1;
+}
+
+int setNonblock(int fd) {
+    int flags;
+#if defined (O_NONBLOCK)
+    if (-1 == (flags = fcntl(fd, F_GETFL, 0)))
+        flags = 0;
+    return fcntl(fd, F_SETFL, 0)
 }
 
 int main(int argc, char** argv)
