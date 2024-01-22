@@ -14,8 +14,6 @@
 #include <assert.h>
 #include <sys/time.h>
 
-
-#include <iostream>
 #define PORT_NUMBER 12345
 #define BUFFER_LENGTH 1024
 #define MAX_EVENTS 32
@@ -86,7 +84,7 @@ int main(int argc, char** argv)
         int quantityEvents = epoll_wait(ePoll, events, MAX_EVENTS, -1);
         if (quantityEvents < 0) {
             if (errno == EINTR) {
-                std::cout << "SIGHUB!!!" << std::endl;
+                printf("SIGHUB!!!");
                 break;
             }
             else {
@@ -116,7 +114,7 @@ int main(int argc, char** argv)
             {
                 char buf[1024];
                 int recvResult = recv(events[i].data.fd, buf, 1024, MSG_NOSIGNAL);
-                std::cout << "полученно " << recvResult << std::endl;
+                printf("полученно %d", recvResult);
                 if ((recvResult == 0) && (errno != EAGAIN)) {
                     shutdown(events[i].data.fd, SHUT_RDWR);
                     close(events[i].data.fd);
