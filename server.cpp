@@ -9,7 +9,7 @@
 #include <string.h>
 //#include "include/lib.h"
 #include "iostream"
-
+using namespace std;
 
 #define PORT_NUMBER 12345
 #define BUFFER_LENGTH 1024
