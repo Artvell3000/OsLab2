@@ -9,7 +9,6 @@
 #include <string.h>
 //#include "include/lib.h"
 #include "iostream"
-using namespace std;
 
 #define PORT_NUMBER 12345
 #define BUFFER_LENGTH 1024
@@ -74,7 +73,7 @@ int main(int argc, char** argv)
         int quantityEvents = epoll_wait(ePoll, events, MAX_EVENTS, -1);
         if (quantityEvents < 0) {
             if (errno == EINTR) {
-                cout << "SIGHUB!!!" << endl;
+                std::cout << "SIGHUB!!!" << std::endl;
                 break;
             }
             else {
@@ -104,7 +103,7 @@ int main(int argc, char** argv)
             {
                 char buf[1024];
                 int recvResult = recv(events[i].data.fd, buf, 1024, MSG_NOSIGNAL);
-                cout << "полученно " << recvResult << endl;
+                std::cout << "полученно " << recvResult << std::endl;
                 if ((recvResult == 0) && (errno != EAGAIN)) {
                     shutdown(events[i].data.fd, SHUT_RDWR);
                     close(events[i].data.fd);
