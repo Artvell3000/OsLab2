@@ -25,11 +25,11 @@ void sigHandler(int r)
 }
 
 int setNonblock(int fd) {
-    int flags;
+    int flags = 0;
 #if defined (O_NONBLOCK)
-    if (-1 == (flags = fcntl(fd, F_GETFL, 0)))
-        flags = 0;
-    return fcntl(fd, F_SETFL, (flags|O_NONBLOCK));
+    flags = fcntl(fd, F_GETFL, 0);
+    if (flags == -1)) flags = 0;
+    return fcntl(fd, F_SETFL, flags|O_NONBLOCK);
 #else
     flags = 1;
     return ioctl(fd, FIOBIO, &flags);
