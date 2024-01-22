@@ -8,9 +8,11 @@
 #include <errno.h>
 #include <string.h>
 #include <signal.h>
+#include <fcntl.h>
+#include <ioctl.h>
 //#include "include/lib.h"
 #include "iostream"
-#define O_NONBLOCK
+//#define O_NONBLOCK
 #define PORT_NUMBER 12345
 #define BUFFER_LENGTH 1024
 #define MAX_EVENTS 32
