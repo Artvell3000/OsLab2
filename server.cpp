@@ -9,10 +9,13 @@
 #include <string.h>
 #include <signal.h>
 #include <fcntl.h>
-//#include <ioctl.h>
-//#include "include/lib.h"
+
+#include <arpa/inet.h>
+#include <assert.h>
+#include <sys/time.h>
+
+
 #include "iostream"
-#define O_NONBLOCK
 #define PORT_NUMBER 12345
 #define BUFFER_LENGTH 1024
 #define MAX_EVENTS 32
@@ -27,7 +30,7 @@ void sigHandler(int r)
 int setNonblock(int fd) {
     int old_option = fcntl(fd, F_GETFL);
     int new_option = old_option | O_NONBLOCK;
-    Fcntl(fd, F_SETFL, new_option);
+    fcntl(fd, F_SETFL, new_option);
     return old_option;
 }
 
