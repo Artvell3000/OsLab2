@@ -7,10 +7,11 @@
 #include <unistd.h>
 
 #define SERVER_ADDRES "127.0.0.1"
-#define SERVER_PORT 12345
+#define SERVER_PORT 1234
 
 int main(int argv, char** argc)
 {
+    setvbuf(stdout, NULL, _IOLBF, 0);
     int socketClient = socket(AF_INET,SOCK_STREAM,0);
 
     if (socketClient < 0) {
@@ -32,6 +33,7 @@ int main(int argv, char** argc)
         if (sendResult < 0) {
             perror("send!!!");
         }
+        printf("serdResult: %d", sendResult);
         sleep(1);
     }
 
