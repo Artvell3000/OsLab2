@@ -34,13 +34,16 @@ int setNonblock(int fd) {
 
 int main(int argc, char** argv)
 {
+    printf("start prog");
     setlocale(LC_ALL, "ru");
 
+    printf("setlocale()");
     struct sigaction sa;
     sigaction(SIGHUP, NULL, &sa);
     sa.sa_handler = sigHandler;
     sa.sa_flags |= SA_RESTART;
     sigaction(SIGHUP, &sa, NULL);
+    printf("sigaction()");
 
     sigset_t blockedMask, origMask;
     sigemptyset(&blockedMask);
