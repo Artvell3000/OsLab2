@@ -34,17 +34,17 @@ int setNonblock(int fd) {
 
 int main(int argc, char** argv)
 {
-    printf("start prog");
+    printf("start prog\n");
     setvbuf(stdout, NULL, _IOLBF, 0);
     setlocale(LC_ALL, "ru");
 
-    printf("setlocale()");
+    printf("setlocale()\n");
     struct sigaction sa;
     sigaction(SIGHUP, NULL, &sa);
     sa.sa_handler = sigHandler;
     sa.sa_flags |= SA_RESTART;
     sigaction(SIGHUP, &sa, NULL);
-    printf("sigaction()");
+    printf("sigaction()\n");
 
     sigset_t blockedMask, origMask;
     sigemptyset(&blockedMask);
@@ -57,10 +57,10 @@ int main(int argc, char** argv)
         perror("Socket");
         exit(EXIT_FAILURE);
     }
-    printf("socket()");
+    printf("socket()\n");
     // сделаем сокет неблокирующим 
     setNonblock(serverSocket);
-    printf("setNonblock()");
+    printf("setNonblock()\n");
 
     struct sockaddr_in sockAddr;
     sockAddr.sin_family = AF_INET;
@@ -72,10 +72,10 @@ int main(int argc, char** argv)
         perror("Bind");
         exit(EXIT_FAILURE);
     }
-    printf("bind()");
+    printf("bind()\n");
 
     listen(serverSocket, SOMAXCONN);
-    printf("listen()");
+    printf("listen()\n");
     // создам дескриптор epoll
     int ePoll = epoll_create1(0);
     struct epoll_event event;
@@ -87,9 +87,9 @@ int main(int argc, char** argv)
     while (1)
     {
         struct epoll_event events[MAX_EVENTS];
-        printf("epoll_wait");
+        printf("epoll_wait\n");
         int quantityEvents = epoll_wait(ePoll, events, MAX_EVENTS, -1);
-        printf("epoll_wait completed");
+        printf("epoll_wait completed\n");
         if (quantityEvents < 0) {
             if (errno == EINTR) {
                 printf("SIGHUB!!!");
