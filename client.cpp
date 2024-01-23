@@ -33,7 +33,7 @@ int main(int argv, char** argc)
         if (sendResult < 0) {
             perror("send!!!");
         }
-        printf("serdResult: %d", sendResult);
+        printf("serdResult: %d \n", sendResult);
         sleep(1);
     }
 
