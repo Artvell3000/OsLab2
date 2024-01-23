@@ -68,7 +68,7 @@ int main(int argc, char** argv)
         perror("Bind");
         exit(EXIT_FAILURE);
     }
-    print("bind()");
+    printf("bind()");
 
     listen(serverSocket, SOMAXCONN);
     printf("listen()");
