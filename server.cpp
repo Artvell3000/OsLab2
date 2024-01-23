@@ -14,7 +14,7 @@
 #include <assert.h>
 #include <sys/time.h>
 
-#define PORT_NUMBER 12345
+#define PORT_NUMBER 1234
 #define BUFFER_LENGTH 1024
 #define MAX_EVENTS 32
 
@@ -53,9 +53,10 @@ int main(int argc, char** argv)
         perror("Socket");
         exit(EXIT_FAILURE);
     }
-
+    printf("socket()");
     // сделаем сокет неблокирующим 
     setNonblock(serverSocket);
+    printf("setNonblock()");
 
     struct sockaddr_in sockAddr;
     sockAddr.sin_family = AF_INET;
@@ -67,9 +68,10 @@ int main(int argc, char** argv)
         perror("Bind");
         exit(EXIT_FAILURE);
     }
+    print("bind()");
 
     listen(serverSocket, SOMAXCONN);
-
+    printf("listen()");
     // создам дескриптор epoll
     int ePoll = epoll_create1(0);
     struct epoll_event event;
@@ -81,9 +83,9 @@ int main(int argc, char** argv)
     while (1)
     {
         struct epoll_event events[MAX_EVENTS];
-        printf("1");
+        printf("epoll_wait");
         int quantityEvents = epoll_wait(ePoll, events, MAX_EVENTS, -1);
-        printf("2");
+        printf("epoll_wait completed");
         if (quantityEvents < 0) {
             if (errno == EINTR) {
                 printf("SIGHUB!!!");
