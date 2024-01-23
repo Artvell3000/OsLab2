@@ -81,7 +81,9 @@ int main(int argc, char** argv)
     while (1)
     {
         struct epoll_event events[MAX_EVENTS];
+        printf('1');
         int quantityEvents = epoll_wait(ePoll, events, MAX_EVENTS, -1);
+        printf('2');
         if (quantityEvents < 0) {
             if (errno == EINTR) {
                 printf("SIGHUB!!!");
