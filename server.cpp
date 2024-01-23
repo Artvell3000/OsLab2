@@ -35,6 +35,7 @@ int setNonblock(int fd) {
 int main(int argc, char** argv)
 {
     printf("start prog");
+    setvbuf(stdout, NULL, _IOLBF, 0);
     setlocale(LC_ALL, "ru");
 
     printf("setlocale()");
