@@ -40,7 +40,8 @@ int main(int argv, char** argc)
 
     
     while (1) {
-        char buf[] = randStr(20);
+        char buf[20];
+        strcpy(buf, randStr(20));
 
         int sendResult = send(socketClient, buf, sizeof(buf), 0);
         if (sendResult < 0) {
