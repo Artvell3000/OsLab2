@@ -1,5 +1,5 @@
 #include <stdio.h>
-
+#include <stdlib.h>
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <netinet/in.h>
@@ -39,8 +39,9 @@ int main(int argv, char** argc)
 
     
     while (1) {
-        
-        int sendResult = send(socketClient, randStr(20), sizeof(buf), 0);
+        char* buf = randStr(20);
+
+        int sendResult = send(socketClient, buf, sizeof(buf), 0);
         if (sendResult < 0) {
             perror("send!!!");
         }
