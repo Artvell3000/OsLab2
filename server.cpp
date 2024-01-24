@@ -17,6 +17,7 @@
 #define PORT_NUMBER 1234
 #define BUFFER_LENGTH 1024
 #define MAX_EVENTS 32
+#define TEST
 
 volatile sig_atomic_t sighup = 0;
 
@@ -35,22 +36,36 @@ int setNonblock(int fd) {
 int main(int argc, char** argv)
 {
     setvbuf(stdout, NULL, _IOLBF, 0);
+
+#if defined(TEST)
     printf("start prog\n");
+#endif
     
     setlocale(LC_ALL, "ru");
 
+#if defined(TEST)
     printf("setlocale()\n");
+#endif
+
     struct sigaction sa;
     sigaction(SIGHUP, NULL, &sa);
     sa.sa_handler = sigHandler;
     sa.sa_flags |= SA_RESTART;
     sigaction(SIGHUP, &sa, NULL);
-    printf("sigaction()\n");
 
+
+#if defined(TEST)
+    printf("sigaction()\n");
+#endif
+    
     sigset_t blockedMask, origMask;
     sigemptyset(&blockedMask);
     sigaddset(&blockedMask, SIGHUP);
     sigprocmask(SIG_BLOCK, &blockedMask, &origMask);
+
+#if defined(TEST)
+    printf("sigprocmask()\n");
+#endif
 
     int serverSocket = socket(AF_INET, SOCK_STREAM, 0);
     if (serverSocket < 0)
@@ -58,10 +73,9 @@ int main(int argc, char** argv)
         perror("Socket");
         exit(EXIT_FAILURE);
     }
-    printf("socket()\n");
+
     // сделаем сокет неблокирующим 
     setNonblock(serverSocket);
-    printf("setNonblock()\n");
 
     struct sockaddr_in sockAddr;
     sockAddr.sin_family = AF_INET;
@@ -73,10 +87,9 @@ int main(int argc, char** argv)
         perror("Bind");
         exit(EXIT_FAILURE);
     }
-    printf("bind()\n");
 
     listen(serverSocket, SOMAXCONN);
-    printf("listen()\n");
+
     // создам дескриптор epoll
     int ePoll = epoll_create1(0);
     struct epoll_event event;
@@ -88,9 +101,15 @@ int main(int argc, char** argv)
     while (1)
     {
         struct epoll_event events[MAX_EVENTS];
+
+#if defined(TEST)
         printf("epoll_wait\n");
+#endif
         int quantityEvents = epoll_wait(ePoll, events, MAX_EVENTS, -1);
+#if defined(TEST)
         printf("epoll_wait completed\n");
+#endif
+        
         if (quantityEvents < 0) {
             if (errno == EINTR) {
                 printf("SIGHUB!!!");
@@ -123,7 +142,7 @@ int main(int argc, char** argv)
             {
                 char buf[1024];
                 int recvResult = recv(events[i].data.fd, buf, 1024, MSG_NOSIGNAL);
-                printf("полученно %d", recvResult);
+                printf("полученно %d \n", recvResult);
                 if ((recvResult == 0) && (errno != EAGAIN)) {
                     shutdown(events[i].data.fd, SHUT_RDWR);
                     close(events[i].data.fd);
