@@ -9,6 +9,15 @@
 #define SERVER_ADDRES "127.0.0.1"
 #define SERVER_PORT 1234
 
+char* randStr(int lim) {
+    int sizeS = rand() % lim;
+    char* s = new char[sizeS];
+    for (int i = 0;i < (sizeS-1);i++) {
+        s[i] = 'a' + rand()%('z' - 'a')
+    }
+    return s;
+}
+
 int main(int argv, char** argc)
 {
     setvbuf(stdout, NULL, _IOLBF, 0);
@@ -27,9 +36,11 @@ int main(int argv, char** argc)
     if (connectResult < 0) {
         perror("connect!!!");
     }
+
+    
     while (1) {
-        char buf[] = "sms";
-        int sendResult = send(socketClient, buf, sizeof(buf), 0);
+        
+        int sendResult = send(socketClient, randStr(20), sizeof(buf), 0);
         if (sendResult < 0) {
             perror("send!!!");
         }
