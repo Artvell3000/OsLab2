@@ -15,6 +15,7 @@ char* randStr(int lim) {
     for (int i = 0;i < (sizeS-1);i++) {
         s[i] = 'a' + rand() % ('z' - 'a');
     }
+    s[sizeS - 1] = '\0';
     return s;
 }
 

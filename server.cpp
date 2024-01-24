@@ -142,7 +142,7 @@ int main(int argc, char** argv)
             {
                 char buf[1024];
                 int recvResult = recv(events[i].data.fd, buf, 1024, MSG_NOSIGNAL);
-                printf("полученно %d : %c \n", recvResult, buf);
+                printf("полученно %d : %s \n", recvResult, buf);
                 if ((recvResult == 0) && (errno != EAGAIN)) {
                     shutdown(events[i].data.fd, SHUT_RDWR);
                     close(events[i].data.fd);
