@@ -11,7 +11,7 @@
 
 char* randStr(int lim) {
     int sizeS = rand() % lim;
-    char* s = std::new char[sizeS];
+    char* s = new char[sizeS];
     for (int i = 0;i < (sizeS-1);i++) {
         s[i] = 'a' + rand() % ('z' - 'a');
     }
